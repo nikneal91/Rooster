@@ -18,7 +18,7 @@ public class AlarmWindow extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 7317979646518789994L;
-	public AlarmWindow(String alarmName, int seconds){
+	public AlarmWindow(String alarmName, long seconds){
 		this.alarmName = alarmName;
 		SoundFile soundFile = new SoundFile("Beep", "src/SoundFiles/Beep.wav");
 		Alarm alarm = new Alarm(alarmName, seconds, soundFile);

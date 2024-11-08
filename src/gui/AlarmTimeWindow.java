@@ -10,9 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 
-import org.joda.time.DateTime;
-import org.joda.time.Seconds;
 
 public class AlarmTimeWindow extends JFrame{
 	/**
@@ -80,19 +80,16 @@ public class AlarmTimeWindow extends JFrame{
 				int min = Integer.parseInt(minList.getSelectedItem()+"");
 				String m = mList.getSelectedItem()+"";
 				//Calculate the seconds for the alarm.
-				DateTime now = DateTime.now();
+				LocalDateTime now = LocalDateTime.now();
 				int targetHourOfDay = hour;
 				//If pass noon add 12 to convert to military time. 
 				if(m.equals("pm")){
 					targetHourOfDay += 12;
 				}
 				//The target deadline for the alarm to go off.
-				DateTime dateTime = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), targetHourOfDay, min);
-
-				
-				Seconds seconds = Seconds.secondsBetween(now, dateTime);
-			
-				AlarmWindow window = new AlarmWindow(alarmName, seconds.getSeconds());
+				LocalDateTime dateTime = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), targetHourOfDay, min);
+				long seconds= now.until(dateTime,ChronoUnit.SECONDS);
+				AlarmWindow window = new AlarmWindow(alarmName, seconds);
 				window.setVisible(true);
 			}
 		});

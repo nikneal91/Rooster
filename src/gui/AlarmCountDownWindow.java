@@ -11,8 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.joda.time.DateTime;
-import org.joda.time.Seconds;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.time.Instant;
+import java.time.LocalDate;
 
 public class AlarmCountDownWindow extends JFrame {
 	/**
@@ -79,13 +81,13 @@ public class AlarmCountDownWindow extends JFrame {
 				int sec = Integer.parseInt(secList.getSelectedItem()+"");
 				
 				//Calculate the seconds for the alarm.
-				DateTime now = DateTime.now();
-				DateTime dateTime = now.plusHours(hour);
+				LocalTime now = LocalTime.now();
+				LocalTime dateTime = now.plusHours(hour);
 				dateTime = dateTime.plusMinutes(min);
 				dateTime = dateTime.plusSeconds(sec);
-				Seconds seconds = Seconds.secondsBetween(now, dateTime);
-			
-				AlarmWindow window = new AlarmWindow(alarmName, seconds.getSeconds());
+				long seconds= now.until(dateTime,
+                       ChronoUnit.SECONDS);
+				AlarmWindow window = new AlarmWindow(alarmName, seconds);
 				window.setVisible(true);
 			}
 		});
